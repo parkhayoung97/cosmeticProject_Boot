@@ -22,8 +22,8 @@
 				<div class="id_wrap">
 					<div class="id_name">아이디</div>
 					<div class="id_input_box">
-						<input class="id_input" name="memberId" maxlength="20"
-							placeholder="아이디를 입력해 주세요"> <span class="msg_box">${errorMsg.memberId }</span>
+						<input class="id_input" name="memberId" maxlength="20"> 
+						<span class="msg_box">${errorMsg.memberId }</span>
 						<span class="id_input_re_1">사용 가능한 아이디입니다.</span> <span
 							class="id_input_re_2">아이디가 이미 존재합니다.</span>
 					</div>
@@ -31,8 +31,7 @@
 				<div class="pw_wrap">
 					<div class="pw_name">비밀번호</div>
 					<div class="pw_input_box">
-						<input class="pw_input" name="memberPw" maxlength="20"
-							placeholder="비밀번호를 입력해 주세요">
+						<input class="pw_input" name="memberPw" maxlength="20">
 					</div>
 				</div>
 				<div class="pwck_wrap">
@@ -45,8 +44,8 @@
 				<div class="user_wrap">
 					<div class="user_name">이름</div>
 					<div class="user_input_box">
-						<input class="user_input" name="memberName"
-							placeholder="이름을 입력해 주세요"> <span class="msg_box">${errorMsg.memberName }</span>
+						<input class="user_input" name="memberName"> 
+						<span class="msg_box">${errorMsg.memberName }</span>
 					</div>
 				</div>
 				<div class="phone_wrap">
@@ -54,14 +53,14 @@
 					<div class="phone_input_box">
 						<input class="phone_input" name="Phone"
 							placeholder="'-' 없이 입력해 주세요"
-							onkeypress="return lenthCheck(this, 11);"> <span
-							class="msg_box">${errorMsg.Phone }</span>
+							onkeypress="return lenthCheck(this, 11);"> 
+							<span class="msg_box">${errorMsg.Phone }</span>
 					</div>
 				</div>
 				<div class="mail_wrap">
 					<div class="mail_name">이메일</div>
 					<div class="mail_input_box">
-						<input class="mail_input" name="Email" placeholder="이메일을 입력해 주세요">
+						<input class="mail_input" name="Email">
 						<span class="msg_box">${errorMsg.Email }</span>
 					</div>
 					<div class="mail_check_wrap">

@@ -1,13 +1,73 @@
-
+$(".join_button").click(function() {
 var code = "";                //이메일전송 인증번호 저장위한 코드
-
-$(document).ready(function() {
-			//회원가입 버튼(회원가입 기능 작동)
-			$(".join_button").click(function() {
-				$("#join_form").attr("action", "/member/join");
-				$("#join_form").submit();
-			});
-		}); 
+const isSubmit = (function(){
+	let MemberIdCheck = false;
+	let PwCheck = false;
+	let EmailCheck = false;
+	let NameCheck = false;
+	let PhoneCheck = false;
+	let AddCheck1 = false;
+	let AddCheck2 = false;
+	let AddCheck3 = false;
+	
+	const setMemberIdCheck = function(set){
+		MemberIdCheck = set ? true : false;
+		isSubmit();
+	}
+	const setPwCheck = function(set){
+		PwCheck = set ? true : false;
+		isSubmit();
+	}
+	const setEmailCheck = function(set){
+		EmailCheck = set ? true : false;
+		isSubmit();
+	}
+	const setNameCheck = function(set){
+		NameCheck = set ? true : false;
+		isSubmit();
+	}
+	const setPhoneCheck = function(set){
+		PhoneCheck = set ? true : false;
+		isSubmit();
+	}
+	const setAddCheck1 = function(set){
+		AddCheck1 = set ? true : false;
+		isSubmit();
+	}
+	const setAddCheck2 = function(set){
+		AddCheck2 = set ? true : false;
+		isSubmit();
+	}
+	const setAddCheck3 = function(set){
+		AddCheck3 = set ? true : false;
+		isSubmit();
+	}
+	
+	const isSubmit = function(){
+		if(MemberIdCheck && PwCheck && EmailCheck && NameCheck && PhoneCheck && AddCheck1 && AddCheck2 && AddCheck3) {
+			$("#join_form").attr("action", "/member/join");
+			$("#join_form").submit();
+			return true;
+		} else {
+			$(".login_btn").css("background", "#ddd");
+			return false;
+		}
+	}
+	
+	return {
+		setMemberIdCheck : setMemberIdCheck,
+		setPwCheck : setPwCheck,
+		setEmailCheck : setEmailCheck,
+		setNameCheck : setNameCheck,
+		setPhoneCheck : setPhoneCheck,
+		setAddCheck1 : setAddCheck1,
+		setAddCheck2 : setAddCheck2,
+		setAddCheck3 : setAddCheck3,
+		isSubmit : isSubmit
+	}
+  })();
+});
+ 
 		
 /*아이디 중복검사*/
 		$('.id_input').on(
