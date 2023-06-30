@@ -195,20 +195,28 @@ function execution_daum_address(){
 
 /*비밀번호 확인 일치 유효성 검사*/
 
-		$('.pwck_input').on("propertychange change keyup paste input",
-				function() {
-
-					var pw = $('.pw_input').val();
-					var pwck = $('.pwck_input').val();
-					$('.final_pwck_ck').css('display', 'none');
-
-					if (pw == pwck) {
-						$('.pwck_input_re_1').css('display', 'block');
-						$('.pwck_input_re_2').css('display', 'none');
-						pwckcorCheck = true;
-					} else {
-						$('.pwck_input_re_1').css('display', 'none');
-						$('.pwck_input_re_2').css('display', 'block');
-						pwckcorCheck = false;
-					}
-				});
+		function pwdCheck() {
+	const pw_input = $(".pw_input").val().replaceAll(" ", "");
+	const pwck_input = $(".pwck_input").val().replaceAll(" ", "");
+	const msgBox = $(".pwck_input").siblings(".msg_box"); 
+	
+	if(pw_input && pwck_input) {
+		if(pw_input.includes(" ")  || pwck_input.includes(" ")) {
+			msgBox.text("비밀번호를 확인해 주세요");
+			isSubmit.setpasswordCheck(false);
+			return;
+		}
+		
+		if(password1 != password2) {
+			msgBox.text("비밀번호를 확인해 주세요");
+			isSubmit.setpasswordCheck(false);
+		} else {
+			msgBox.text("");
+			console.log("사용가능");
+			isSubmit.setpasswordCheck(true);
+		}
+	}
+	
+}
+				
+				

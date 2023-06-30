@@ -22,10 +22,11 @@
 				<div class="id_wrap">
 					<div class="id_name">아이디</div>
 					<div class="id_input_box">
-						<input class="id_input" name="memberId" maxlength="20"> 
-						<span class="msg_box">${errorMsg.memberId }</span>
-						<span class="id_input_re_1">사용 가능한 아이디입니다.</span> <span
-							class="id_input_re_2">아이디가 이미 존재합니다.</span>
+						<input class="id_input" name="memberId" maxlength="20" placeholder="아이디를 영어+숫자를 사용하여 4~15 사이로 입력해주세요."> 
+						<span class="id_input_re_1">사용 가능한 아이디입니다.</span> 
+						<span class="id_input_re_2">아이디 형식에 맞춰주세요 </span>
+						<span class="id_input_re_3">아이디가 이미 존재합니다.</span>
+							<span class="final_id_ck"> 아이디를 입력해주세요.</span>
 					</div>
 				</div>
 				<div class="pw_wrap">

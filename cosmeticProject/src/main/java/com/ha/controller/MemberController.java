@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -36,6 +37,10 @@ public class MemberController {
 
 	@Autowired
 	private JavaMailSender mailSender;
+	
+	@Autowired
+	private BCryptPasswordEncoder pwdEncoder;
+
 
 	// 회원가입 페이지 이동
 	@GetMapping("/join")
@@ -69,20 +74,15 @@ public class MemberController {
 			for (int i = 0; i < list.size(); i++) {
 				String field = list.get(i).getField();
 				String message = list.get(i).getDefaultMessage();
-
-				System.out.println("필드 = " + field);
-				System.out.println("메세지 = " + message);
-
 				errorMsg.put(field, message);
 			}
 			model.addAttribute("errorMsg", errorMsg);
 			return "member/join";
 		}
-
 		// 회원가입 서비스 실행
+		String encPwd =pwdEncoder.encode(memberDto.getMemberPw());
+		memberDto.setMemberPw(encPwd);
 		memberservice.memberJoin(memberDto);
-
-		logger.info("join Service 성공");
 
 		return "redirect:member/login";
 

@@ -1,4 +1,4 @@
-function IdCheck(Id) {
+function MemberIdCheck(Id) {
 	const regId =  /^[A-Za-z0-9]{4,15}$/;
 	
 	if(regId.test(Id)) {
