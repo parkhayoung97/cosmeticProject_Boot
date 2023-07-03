@@ -1,12 +1,3 @@
-function MemberIdCheck(Id) {
-	const regId =  /^[A-Za-z0-9]{4,15}$/;
-	
-	if(regId.test(Id)) {
-		return true;
-	} else {
-		return false;
-	}
-}
  
 function emailCheck(email){
 	const regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;

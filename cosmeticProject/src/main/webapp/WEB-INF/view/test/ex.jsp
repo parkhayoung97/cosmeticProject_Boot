@@ -1,6 +1,15 @@
-var idCheck = false;//아이디
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<script>
+		var idCheck = false;//아이디
 		var idckCheck = false;//아이디 중복 검사
-		var memberIdCheck = false;
 		var pwCheck = false;//비번
 		var pwckCheck = false;//비번 확인
 		var pwckcorCheck = false;//비번 확인 일치
@@ -27,15 +36,13 @@ var idCheck = false;//아이디
 				});
 
 		/*아이디 유효성 검사*/
-		$(".id_input").focusout(function() {
+		$(".join_button").focusout(function() {
 			var id = $('.id_input').val();//id 입력란
-			var msgBox = $(this).siblings(".msg_box");
-			var regId =  /^[A-Za-z0-9]{4,15}$/;
-			 
+
 			if (id == "") {
 				msgBox.text("아이디를 입력해주세요.");
 				idCheck = false;
-			} else if (!regId.test(id)) {
+			} else if (!MemberIdCheck(memberId)) {
 				msgBox.text("아이디를 형식에 맞춰주세요.");
 				idCheck = false;
 			} else {
@@ -44,7 +51,7 @@ var idCheck = false;//아이디
 		});
 
 		/*아이디 중복검사*/
-		$('.Id_check_button').click(
+		$('.id_input').on(
 				"propertychange change keyup paste input",
 				function() {
 
@@ -52,8 +59,7 @@ var idCheck = false;//아이디
 					var data = {
 						memberId : memberId
 					} // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
-					var msgBox = $(this).siblings(".msg_box"); 
-					
+
 					$.ajax({
 						type : "post",
 						url : "/member/memberIdChk",
@@ -62,11 +68,11 @@ var idCheck = false;//아이디
 							// console.log("성공 여부" + result);
 							if (result != 'fail') {
 								msgBox.text("사용 가능한 아이디입니다.");
-								msgBox.css({"color": "green"});
+								msgBox.css({"color": "green";});
 								
 							} else {
 								msgBox.text("아이디가 이미 존재합니다.");
-								msgBox.css({"color": "red"});
+								msgBox.css({"color": "red";});
 							}
 						}// success 종료
 					}); // ajax 종료	
@@ -189,3 +195,32 @@ var idCheck = false;//아이디
 						}
 					}).open();
 		}
+		
+		function pwdCheck() {
+			const password1 = $(".password1").val().replaceAll(" ", "");
+			const password2 = $(".password2").val().replaceAll(" ", "");
+			const msgBox = $(".password2").siblings(".msg_box"); 
+			
+			if(password1 && password2) {
+				if(password1.includes(" ")  || password2.includes(" ")) {
+					msgBox.text("비밀번호를 확인해 주세요");
+					isSubmit.setpasswordCheck(false);
+					return;
+				}
+				
+				if(password1 != password2) {
+					msgBox.text("비밀번호를 확인해 주세요");
+					isSubmit.setpasswordCheck(false);
+				} else {
+					msgBox.text("");
+					console.log("사용가능");
+					isSubmit.setpasswordCheck(true);
+				}
+			}
+			
+		}
+		
+		
+	</script>
+</body>
+</html>

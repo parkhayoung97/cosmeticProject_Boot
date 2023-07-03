@@ -1,6 +1,7 @@
 package com.ha.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -21,10 +22,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import java.util.List;
 import com.ha.dto.MemberDTO;
 import com.ha.service.MemberService;
-import lombok.val;
 
 @Controller
 @RequestMapping(value = "/member")
@@ -37,10 +36,9 @@ public class MemberController {
 
 	@Autowired
 	private JavaMailSender mailSender;
-	
+
 	@Autowired
 	private BCryptPasswordEncoder pwdEncoder;
-
 
 	// 회원가입 페이지 이동
 	@GetMapping("/join")
@@ -80,7 +78,7 @@ public class MemberController {
 			return "member/join";
 		}
 		// 회원가입 서비스 실행
-		String encPwd =pwdEncoder.encode(memberDto.getMemberPw());
+		String encPwd = pwdEncoder.encode(memberDto.getMemberPw());
 		memberDto.setMemberPw(encPwd);
 		memberservice.memberJoin(memberDto);
 
@@ -129,7 +127,7 @@ public class MemberController {
 		String title = "회원가입 인증 이메일 입니다.";
 		String content = "홈페이지를 방문해주셔서 감사합니다." + "<br><br>" + "인증 번호는 " + checkNum + "입니다." + "<br>"
 				+ "해당 인증번호를 인증번호 확인란에 기입하여 주세요.";
-		
+
 		try {
 
 			MimeMessage message = mailSender.createMimeMessage();
@@ -143,10 +141,9 @@ public class MemberController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
-		
+
 		String num = Integer.toString(checkNum);
-		
+
 		return num;
 	}
 
