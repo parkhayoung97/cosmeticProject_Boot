@@ -14,7 +14,7 @@
 <body>
 
 	<div class="wrapper">
-		<form action="join_form" method="post" id="join_form">
+		<form action="member/join" method="post" id="join_form">
 			<div class="wrap">
 				<div class="subjecet">
 					<span>회원가입</span>
@@ -33,13 +33,16 @@
 					<div class="pw_name">비밀번호</div>
 					<div class="pw_input_box">
 						<input class="pw_input" name="memberPw" maxlength="20">
+						<span class="msg_box">${errorMsg.memberPw }</span>
 					</div>
-					<span class="final_pw_ck"> 비밀번호를 입력해주세요.</span>
 				</div>
 				<div class="pwck_wrap">
 					<div class="pwck_name">비밀번호 확인</div>
 					<div class="pwck_input_box">
-						<input class="pwck_input" maxlength="20" placeholder="비밀번호를 한번더 입력해 주세요"> <span class="msg_box">${errorMsg.memberPw }</span>
+						<input class="pwck_input" maxlength="20" placeholder="비밀번호를 한번더 입력해 주세요"> 
+						<span class="final_pwck_ck"> 비밀번호 확인을 입력해주세요.</span> <span
+						class="pwck_input_re_1"> 비밀번호가 일치 합니다.</span> <span
+						class="pwck_input_re_2"> 비밀번호가 일치하지 않습니다.</span>
 					</div>
 				</div>
 				<div class="user_wrap">
@@ -79,9 +82,7 @@
 					<div class="address_name">주소</div>
 					<div class="address_input_1_wrap">
 						<div class="address_input_1_box">
-							<input class="address_input_1" name="Addr1"
-								placeholder="우편번호를 입력해 주세요" readonly="readonly"> <span
-								class="msg_box">${errorMsg.Addr1 }</span>
+							<input class="address_input_1" name="Addr1" placeholder="우편번호를 입력해 주세요" readonly="readonly">
 						</div>
 						<div class="address_button" onclick="execution_daum_address()">
 							<span>주소 찾기</span>
@@ -90,26 +91,22 @@
 					</div>
 					<div class="address_input_2_wrap">
 						<div class="address_input_2_box">
-							<input class="address_input_2" name="Addr2"
-								placeholder="주소를 입력해 주세요" readonly="readonly"> <span
-								class="msg_box">${errorMsg.Addr2 }</span>
+							<input class="address_input_2" name="Addr2" placeholder="주소를 입력해 주세요" readonly="readonly"> 
 						</div>
 					</div>
 					<div class="address_input_3_wrap">
 						<div class="address_input_3_box">
-							<input class="address_input_3" name="Addr3"
-								placeholder="상세주소를 입력해 주세요" readonly="readonly"> <span
-								class="msg_box">${errorMsg.Addr3 }</span>
+							<input class="address_input_3" name="Addr3" placeholder="상세주소를 입력해 주세요" readonly="readonly"> 
+							<span class="msg_box">${errorMsg.Addr3 }</span>
 						</div>
 					</div>
 				</div>
 				<div class="join_button_wrap">
-					<input type="button" class="join_button" value="가입하기">
+					<input type="submit" class="join_button" value="가입하기">
 				</div>
 			</div>
 		</form>
 	</div>
-	<script src="/js/member/util.js"></script>
 	<script src="/js/member/join.js"></script>
 
 </body>

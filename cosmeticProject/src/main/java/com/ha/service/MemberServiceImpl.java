@@ -30,4 +30,10 @@ public class MemberServiceImpl implements MemberService{
 		return membermapper.idCheck(memberId);
 	}
 
+	@Override
+	public MemberDTO memberLogin(MemberDTO member) throws Exception {
+		
+		return membermapper.memberLogin(member);
+	}
+
 }

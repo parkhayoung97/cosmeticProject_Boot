@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.slf4j.Logger;
@@ -22,6 +24,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import com.ha.dto.MemberDTO;
 import com.ha.service.MemberService;
 
@@ -56,6 +60,27 @@ public class MemberController {
 
 	}
 
+	// 로그인
+	@PostMapping("/login")
+	public String loginPOST(HttpServletRequest request, MemberDTO member, RedirectAttributes rttr) throws Exception {
+
+		 HttpSession session = request.getSession();
+		 MemberDTO mdto = memberservice.memberLogin(member);
+		 
+		 if(mdto == null) {                                // 일치하지 않는 아이디, 비밀번호 입력 경우
+	            
+	            int result = 0;
+	            rttr.addFlashAttribute("result", result);
+	            return "redirect:/member/login";
+	            
+	        }
+	        
+	        session.setAttribute("member", mdto);             // 일치하는 아이디, 비밀번호 경우 (로그인 성공)
+	        
+	        return "redirect:/";
+	        
+	}
+
 	// 회원가입
 	@PostMapping("/join")
 	public String joinPOST(@Valid MemberDTO memberDto, BindingResult bindingResult, Model model) throws Exception {
@@ -82,7 +107,7 @@ public class MemberController {
 		memberDto.setMemberPw(encPwd);
 		memberservice.memberJoin(memberDto);
 
-		return "redirect:member/login";
+		return "redirect:/member/login";
 
 	}
 

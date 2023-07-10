@@ -112,6 +112,21 @@
 	font-size: 28px;
 }
 
+/*비밀번호 확인 일치 유효성검사*/
+.pwck_input_re_1 {
+	color: green;
+	display: none;
+}
+
+.pwck_input_re_2 {
+	color: red;
+	display: none;
+}
+
+.final_pwck_ck {
+	display: none;
+}
+
 /* 이름 영역 */
 .user_wrap {
 	width: 100%;

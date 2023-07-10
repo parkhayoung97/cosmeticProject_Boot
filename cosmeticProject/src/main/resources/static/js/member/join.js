@@ -1,97 +1,233 @@
-var idCheck = false;//아이디
+	    var idCheck = false;//아이디
 		var idckCheck = false;//아이디 중복 검사
-		var memberIdCheck = false;
-		var pwCheck = false;//비번
-		var pwckCheck = false;//비번 확인
-		var pwckcorCheck = false;//비번 확인 일치
-		var nameCheck = false;
-		var phoneCheck = false;
-		var mailCheck = false;
-		var mailnumCheck = false;
-		var addressCheck = false;
+		var pwckCheck = false;//비번
+		var pwckcorCheck = false;//비번 확인
+		var nameCheck = false; //이름 확인
+		var phoneCheck = false; //전화번호 확인
+		var mailCheck = false; //메일 확인
+		var mailnumCheck = false; //인증 메일 확인
+		var addressCheck = false; //주소 확인
 
 		var code = ""; //이메일전송 인증번호 저장을 위한 코드
-
+		
 		//회원가입 버튼(회원가입 기능 작동)
-		$(".join_button").click(
-				function() {
-					if (idCheck && idckCheck && pwckCheck && pwckcorCheck
-							&& nameCheck && phoneCheck && mailCheck
-							&& mailnumCheck && addressCheck) {
-						$("#join_form").attr("action", "/member/join");
-						$("#join_form").submit();
-					}
-
+		const isSubmit = (function(){
+			
+			var setidCheck = function(set){
+				idCheck = set ? true : false;
+				isSubmit();
+			}
+			var setidckCheck = function(set){
+				idckCheck = set ? true : false;
+				isSubmit();
+			}
+			var setpwckCheck = function(set){
+				pwckCheck = set ? true : false;
+				isSubmit();
+			}
+			var setpwckcorCheck = function(set){
+				pwckcorCheck = set ? true : false;
+				isSubmit();
+			}
+			var setnameCheck = function(set){
+				nameCheck = set ? true : false;
+				isSubmit();
+			}
+			var setphoneCheck = function(set){
+				phoneCheck = set ? true : false;
+				isSubmit();
+			}
+			var setmailCheck = function(set){
+				mailCheck = set ? true : false;
+				isSubmit();
+			}
+			var setmailnumCheck = function(set){
+				mailnumCheck = set ? true : false;
+				isSubmit();
+			}
+			var setaddressCheck = function(set){
+				addressCheck = set ? true : false;
+				isSubmit();
+			}
+			
+			var isSubmit = function(){
+				if (idCheck && idckCheck && pwckCheck && pwckcorCheck
+						&& nameCheck && phoneCheck && mailCheck
+						&& mailnumCheck && addressCheck) {	
+					$("#join_form").attr("action", "/member/join");
+					$("#join_form").submit();
+				} else {
 					return false;
-
-				});
+				}
+			}
+			
+			return {
+				setidCheck : setidCheck,
+				setidckCheck : setidckCheck,
+				setpwckCheck : setpwckCheck,
+				setpwckcorCheck : setpwckcorCheck,
+				setnameCheck : setnameCheck,
+				setphoneCheck : setphoneCheck,
+				setmailCheck : setmailCheck,
+				setmailnumCheck : setmailnumCheck,
+				setaddressCheck : setaddressCheck,
+				isSubmit: isSubmit
+			}
+		})();
 
 		/*아이디 유효성 검사*/
 		$(".id_input").focusout(function() {
 			var id = $('.id_input').val();//id 입력란
 			var msgBox = $(this).siblings(".msg_box");
-			var regId =  /^[A-Za-z0-9]{4,15}$/;
-			 
+			var regId = /^[A-Za-z0-9]{4,15}$/;
+
 			if (id == "") {
 				msgBox.text("아이디를 입력해주세요.");
-				idCheck = false;
+				isSubmit.setidCheck(false);
 			} else if (!regId.test(id)) {
 				msgBox.text("아이디를 형식에 맞춰주세요.");
-				idCheck = false;
+				isSubmit.setidCheck(false);
 			} else {
-				idCheck = true;
+				isSubmit.setidCheck(true);
 			}
 		});
 
 		/*아이디 중복검사*/
-		$('.Id_check_button').click(
-				"propertychange change keyup paste input",
+		$('.Id_check_button').click("propertychange change keyup paste input",
 				function() {
 
 					var memberId = $('.id_input').val(); // .id_input에 입력되는 값
 					var data = {
 						memberId : memberId
 					} // '컨트롤에 넘길 데이터 이름' : '데이터(.id_input에 입력되는 값)'
-					var msgBox = $(this).siblings(".msg_box"); 
-					
+					var msgBox = $(this).siblings(".msg_box");
+
 					$.ajax({
 						type : "post",
 						url : "/member/memberIdChk",
 						data : data,
 						success : function(result) {
 							// console.log("성공 여부" + result);
-							if (result != 'fail') {
+
+							if (memberId == '') {
+								msgBox.text("아이디를 입력해주세요.");
+								msgBox.css({
+									"color" : "red"
+								});
+								isSubmit.setidckCheck(false);
+
+							} else if (result != 'fail') {
 								msgBox.text("사용 가능한 아이디입니다.");
-								msgBox.css({"color": "green"});
-								
+								msgBox.css({
+									"color" : "green"
+								});
+								isSubmit.setidckCheck(false);
+
 							} else {
 								msgBox.text("아이디가 이미 존재합니다.");
-								msgBox.css({"color": "red"});
+								msgBox.css({
+									"color" : "red"
+								});
+								isSubmit.setidckCheck(true);
 							}
 						}// success 종료
 					}); // ajax 종료	
 
 				});// function 종료		
 
+		/*비밀번호 유효성 검사*/
+		$(".pw_input").focusout(function() {
+			var pwd = $('.pw_input').val();//비밀번호. 입력란
+			var msgBox = $(this).siblings(".msg_box");
+			if (pwd == "") {
+				msgBox.text("비밀번호를 입력해주세요.");
+				isSubmit.setpwckCheck(false);
+			} else {
+				isSubmit.setpwckCheck(true);
+			}
+		});
+
 		/*비밀번호 확인 일치 유효성 검사*/
 
 		$('.pwck_input').on("propertychange change keyup paste input",
 				function() {
-			
+
 					var pw = $('.pw_input').val();
 					var pwck = $('.pwck_input').val();
+
 					$('.final_pwck_ck').css('display', 'none');
 
 					if (pw == pwck) {
 						$('.pwck_input_re_1').css('display', 'block');
 						$('.pwck_input_re_2').css('display', 'none');
-						pwckcorCheck = true;
+						isSubmit.setpwckcorCheck(true);
 					} else {
 						$('.pwck_input_re_1').css('display', 'none');
 						$('.pwck_input_re_2').css('display', 'block');
-						pwckcorCheck = false;
+						isSubmit.setpwckcorCheck(false);
 					}
 				});
+
+		/*이름 유효성 검사*/
+		$(".user_input").focusout(function() {
+			var userName = $('.user_input').val();//이름 입력란
+			var msgBox = $(this).siblings(".msg_box");
+			if (userName == "") {
+				msgBox.text("이름을 입력해주세요.");
+				isSubmit.setnameCheck(false);
+			} else {
+				isSubmit.setnameCheck(true);
+			}
+		});
+
+		/*전화번호 유효성 확인*/
+		$(".phone_input").focusout(function() {
+			var phone = $('.phone_input').val();//id 입력란
+			var msgBox = $(this).siblings(".msg_box");
+			var regPhone = /^01([0|1|6|7|8|9])-?([0-9]{3,4})-?([0-9]{4})$/;
+
+			if (phone == "") {
+				msgBox.text("아이디를 입력해주세요.");
+				isSubmit.setphoneCheck(false);
+			} else if (!regPhone.test(phone)) {
+				msgBox.text("휴대폰번호를 확인해 주세요.");
+				isSubmit.setphoneCheck(false);
+			} else {
+				isSubmit.setphoneCheck(true);
+			}
+		});
+
+		/*전화번호 길이*/
+		function lenthCheck(e, length) {
+			if (e.value.length >= length) {
+				return false;
+			}
+
+			$(this).off().focusout(function() {
+				if (e.value.length > length) {
+					e.value = "";
+				}
+			})
+
+			return true;
+		}
+
+		/*이메일 유효성 확인*/
+		$(".mail_input").focusout(function() {
+			var mail = $('.mail_input').val();//mail 입력란
+			var msgBox = $(this).siblings(".msg_box");
+							var regEmail = /^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/;
+
+			if (mail == "") {
+				msgBox.text("메일주소를 입력해주세요.");
+				isSubmit.setmailCheck(false);
+		    } else if (!regEmail.test(mail)) {
+				msgBox.text("메일주소를 형식에 맞춰주세요.");
+				isSubmit.setmailCheck(false);
+			} else {
+				isSubmit.setmailCheck(true);
+				}
+					});
 
 		/* 인증번호 이메일 전송 */
 		$(".mail_check_button").click(function() {
@@ -124,11 +260,30 @@ var idCheck = false;//아이디
 			if (inputCode == code) { // 일치할 경우
 				checkResult.html("인증번호가 일치합니다.");
 				checkResult.attr("class", "correct");
+				isSubmit.setmailnumCheck(true);
 			} else { // 일치하지 않을 경우
 				checkResult.html("인증번호를 다시 확인해주세요.");
 				checkResult.attr("class", "incorrect");
+				isSubmit.setmailnumCheck(false);
 			}
 
+		});
+		
+		/*주소 유효성 검사*/
+		$(".address_input_3").focusout(function() {
+			var addr1 = $('.address_input_1').val();//우편번호
+			var addr2 = $('.address_input_2').val();//주소
+			var addr3 = $('.address_input_3').val();//주소
+			var msgBox = $(this).siblings(".msg_box");
+			if (addr1 == "" && addr2 == "" && addr3 == "") {
+				msgBox.text("주소를 입력해주세요.");
+				isSubmit.setaddressCheck(false);
+			} else if (addr3 == ""){
+				msgBox.text("상세주소를 입력해주세요.");
+				isSubmit.setaddressCheck(false);
+			} else{
+				isSubmit.setaddressCheck(true);
+			}
 		});
 
 		/* 다음 주소 연동 */
