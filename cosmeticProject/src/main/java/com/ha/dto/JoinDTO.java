@@ -9,7 +9,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class MemberDTO {
+public class JoinDTO {
 
 	// 회원 id
 	@Pattern(regexp = "[A-Za-z0-9]{4,15}$", message = "아이디는 영어, 숫자 4 ~15자리로 입력 가능합니다")
@@ -40,5 +40,6 @@ public class MemberDTO {
 
 	// 회원 포인트
 	private int point;
+	
 
 }

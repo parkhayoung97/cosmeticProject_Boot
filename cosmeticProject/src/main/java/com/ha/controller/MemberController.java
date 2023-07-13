@@ -26,7 +26,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.ha.dto.MemberDTO;
+import com.ha.dto.JoinDTO;
 import com.ha.service.MemberService;
 
 @Controller
@@ -62,28 +62,16 @@ public class MemberController {
 
 	// 로그인
 	@PostMapping("/login")
-	public String loginPOST(HttpServletRequest request, MemberDTO member, RedirectAttributes rttr) throws Exception {
-
-		 HttpSession session = request.getSession();
-		 MemberDTO mdto = memberservice.memberLogin(member);
-		 
-		 if(mdto == null) {                                // 일치하지 않는 아이디, 비밀번호 입력 경우
-	            
-	            int result = 0;
-	            rttr.addFlashAttribute("result", result);
-	            return "redirect:/member/login";
-	            
-	        }
-	        
-	        session.setAttribute("member", mdto);             // 일치하는 아이디, 비밀번호 경우 (로그인 성공)
-	        
-	        return "redirect:/";
+	public String login(HttpServletRequest request, HttpSession session) {
+		String referer = (String) request.getHeader("referer");
+		session.setAttribute("referer", referer);
+		return "member/login";
 	        
 	}
 
 	// 회원가입
 	@PostMapping("/join")
-	public String joinPOST(@Valid MemberDTO memberDto, BindingResult bindingResult, Model model) throws Exception {
+	public String joinPOST(@Valid JoinDTO memberDto, BindingResult bindingResult, Model model) throws Exception {
 
 		logger.info("join 진입");
 
@@ -100,13 +88,14 @@ public class MemberController {
 				errorMsg.put(field, message);
 			}
 			model.addAttribute("errorMsg", errorMsg);
-			return "member/join";
+			logger.info("회원가입 실패");
+			return "/join";
 		}
 		// 회원가입 서비스 실행
 		String encPwd = pwdEncoder.encode(memberDto.getMemberPw());
 		memberDto.setMemberPw(encPwd);
 		memberservice.memberJoin(memberDto);
-
+		logger.info("회원가입 성공");
 		return "redirect:/member/login";
 
 	}

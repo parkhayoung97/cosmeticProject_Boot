@@ -5,7 +5,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ha.dto.MemberDTO;
+import com.ha.dto.JoinDTO;
 import com.ha.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class MemberServiceImpl implements MemberService{
 	MemberMapper membermapper;
 
 	@Override
-	public void memberJoin(MemberDTO memberDto) {
+	public void memberJoin(JoinDTO memberDto) {
 		
 		membermapper.memberJoin(memberDto);
 		
@@ -31,7 +31,7 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public MemberDTO memberLogin(MemberDTO member) throws Exception {
+	public JoinDTO memberLogin(JoinDTO member) throws Exception {
 		
 		return membermapper.memberLogin(member);
 	}
